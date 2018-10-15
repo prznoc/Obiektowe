@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"myPackage","l":"Analyze"}]
