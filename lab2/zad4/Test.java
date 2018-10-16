@@ -16,7 +16,7 @@ public class Test{
 			}	
 		}		
 	}
-	public static void add(){
+	private static void add(){
 		double aa, bb;
 		try{
 			System.out.print("side a: ");
@@ -30,18 +30,22 @@ public class Test{
 			System.out.println("wrong length");
 			return;
 			}
+		if (aa<=0 || bb<=0){
+			System.out.println("wrong length");
+			return;
+		}
 		Prostokat pro = new Prostokat(aa,bb);
 		figury.add(pro);
 		System.out.println("added");
 	}
-	public static void display(){
+	private static void display(){
 		for (int i = 0; i< figury.size(); ++i){
 			Prostokat a = figury.get(i);
 			int b = i+1;
 			System.out.println("rectangle nb "+b+" "+a.get_a()+"/"+a.get_b());
 		}
 	}
-	public static void sum(){
+	private static void sum(){
 		double suma = 0;
 		Prostokat a;
 		for (int i = 0; i< figury.size(); ++i){
