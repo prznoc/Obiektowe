@@ -7,11 +7,11 @@ public class A{
 		this.number = num;
 		this.name = nazwa;
 	}
-	public void callDecrement(){ this.number = this.number -2;}
-	public void callchangeName(String nazwa){ this.name = nazwa;}
-	public void callIncrement(){ this.number = this.number +1;}
-	private void Increment(){this.number = this.number+1;}
-	protected void Decrement(){ this.number = this.number -1;}
+	public void callDecrement(){Decrement(); }
+	public void callchangeName(String nazwa){ changeName(nazwa);}
+	public void callIncrement(){ Increment();}
+	private void Increment(){this.number += 2;}
+	protected void Decrement(){ this.number -= 3;}
 	void changeName (String nazwa){ this.name = nazwa;}
 	public void display_name(){System.out.println(name);}
 	public void display_number(){System.out.println(number);}

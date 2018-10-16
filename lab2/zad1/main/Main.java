@@ -1,5 +1,6 @@
-package pkg2;
+package main;
 import pkg1.*;
+import pkg2.*;
 public class Main{
 	public static void main(String [] argv){
 		A a = new A (23,"aaa");
