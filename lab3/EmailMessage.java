@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -26,21 +25,19 @@ public class EmailMessage{
 	}
 
 	public void send(){
-        final String password;
-        System.out.println("Podaj hasło: ");
+		System.out.println(from);
+		final String password;
+        System.out.print("Password: ");
         Scanner odczyt = new Scanner(System.in);
         password = odczyt.nextLine();
-
-
         Properties properties = System.getProperties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.poczta.interia.pl");
+        properties.put("mail.smtp.host", "poczta.interia.pl");
         properties.put("mail.debug", "true");
-        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.socketFactory.port", "465");
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
 
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {

@@ -7,6 +7,6 @@ public class Main{
 		addSubject("Mail testowy").
 		addContent("Brak tresci").
 		build();
-//		wiadomosc.send();
+		wiadomosc.send();
 	}
 }
