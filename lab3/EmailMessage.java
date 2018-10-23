@@ -24,6 +24,47 @@ public class EmailMessage{
 	static public Builder builder(){
 		return new EmailMessage.Builder();
 	}
+
+	public void send(){
+        final String password;
+        System.out.println("Podaj hasło: ");
+        Scanner odczyt = new Scanner(System.in);
+        password = odczyt.nextLine();
+
+
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.poczta.interia.pl");
+        properties.put("mail.debug", "true");
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+
+        Session session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, password);
+                    }
+                });
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            for(String recipent : to) {
+                message.addRecipients(Message.RecipientType.TO, recipent);
+            }
+            message.setSubject(subject);
+            message.setText(content);
+
+            Transport.send(message);
+            System.out.println("Wysłano.");
+        }
+        catch (MessagingException e){
+            throw new RuntimeException(e);
+        }
+}
+
 	static class Builder{
 		private String from;
         private LinkedList<String> to = new LinkedList<String>();
@@ -43,12 +84,12 @@ public class EmailMessage{
 			return false;
 		}
 		public Builder addFrom(String str){
-			if (!checkAdress(str)) throw new IllegalArgumentException();
+//			if (!checkAdress(str)) throw new IllegalArgumentException();
 			from = str;
 			return this;
 		}
 		public Builder addTo(String str){
-			if (!checkAdress(str)) throw new IllegalArgumentException();
+//			if (!checkAdress(str)) throw new IllegalArgumentException();
 			to.add(str);
 			return this;
 		}
@@ -73,6 +114,7 @@ public class EmailMessage{
 			return this;
 		}
 		public EmailMessage build(){
+			System.out.println(from);
             return new EmailMessage(from, to, subject, content, mimeType, cc, bcc);
 		}
 	}
