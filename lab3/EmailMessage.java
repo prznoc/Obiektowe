@@ -48,8 +48,14 @@ public class EmailMessage{
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
- 			for(String recipent : to) {
-				message.addRecipients(Message.RecipientType.TO, recipent);
+ 			for(String str : to) {
+				message.addRecipients(Message.RecipientType.TO, str);
+			}
+			for(String str : cc) {
+				message.addRecipients(Message.RecipientType.CC, str);
+			}
+			for(String str : bcc) {
+				message.addRecipients(Message.RecipientType.BCC, str);
 			}
 			message.setSubject(subject);
 			message.setText(content);
