@@ -28,12 +28,12 @@ class Delayer {
             begin = Integer.parseInt(temp[0]);
             end = Integer.parseInt(temp[1]);
             if (begin >= end) {
-                throw new SequenceException("Wrong sequence, subtitle ends before it begins", line);
+                throw new SequenceException("Wrong sequence, subtitle ends before it begins", line, in);
             }
             begin += delay*fps /1000;
             end += delay*fps / 1000;
             return "{" + begin.toString() + "}{" + end.toString() + "}" + temp[2];
         }
-        else throw new FormatException("Invalid format of timing", line);
+        else throw new FormatException("Invalid format of timing", line, in);
     }
 }
