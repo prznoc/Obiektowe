@@ -10,7 +10,7 @@ public class Poly extends JPanel {
     private double x_axis[];
     private double y_axis[];
     private final int gap = 50;
-    public Poly(int wspol[], int zakres[], double hz) {
+    Poly(int wspol[], int zakres[], double hz) {
         if ((zakres[0] >= zakres[1]) || hz < 0) throw new UnsupportedOperationException("Wrong boundaries");
         else {
             xMin = zakres[0];
@@ -55,7 +55,7 @@ public class Poly extends JPanel {
         int dimY = this.getHeight() - gap*2;
         setBackground(Color.WHITE);
         g.setColor(Color.RED);
-        int x1 = 0, y1, x2 = 0, y2;
+        int x1 , y1, x2 , y2;
         for (int i = 1; i < x_axis.length; ++i) {
             x1 =  (int) (((x_axis[i - 1]-xMin)*dimX)/(xMax-xMin) + gap);
             x2 =  (int) (((x_axis[i]-xMin)*dimX)/(xMax-xMin) + gap);
