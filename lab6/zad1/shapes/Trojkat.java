@@ -30,13 +30,13 @@ public class Trojkat extends Shape {
     public int getX(){return x1;}
     public int getY(){return y1;}
     public void setX(int d){
-        x1 = d;
         x2 = x2 - x1 + d;
         x3 = x3 - x1 +d;
+		x1 = d;
     }
     public void setY(int d){
-        y1 = d;
         y2 = y2 - y1 + d;
         y3 = y3 - y1 + d;
+		y1 = d;
     }
 }
