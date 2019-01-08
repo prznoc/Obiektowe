@@ -7,22 +7,22 @@ import java.util.concurrent.Executors;
 
 public class EchoServer {
     static DB db;
-    public static String current = "";
     public static void main(String[] args)  {
-        try{
-            createTable();
-        }
-        catch(Exception e){
-            return;
-        }
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(3456);
+            createTable();
         } catch (IOException e) {
             System.err.println("Could not listen on port: 3456");
             System.exit(1);
         }
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        catch(Exception e){
+            System.err.println("cannot connect to database");
+            System.exit(1);
+        }
+        ExecutorService executorService = Executors.newFixedThreadPool(6);
+
         while (true) {
             Socket clientSocket = null;
             try {
@@ -38,51 +38,37 @@ public class EchoServer {
     private static void createTable()throws Exception{
         db = new DB();
         db.createTable();
-
     }
 }
 class ClientThread implements Runnable{
-        private Socket clientSocket;
-        ClientThread(Socket _clientSocket){
-            clientSocket = _clientSocket;
-        }
-        public void run(){
-            try {
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    Result result = new Result(inputLine);
-                    try {
-                        addToDatabase(result);
-                    }
-                    catch (Exception e){
-                    }
+    private Socket clientSocket;
+    ClientThread(Socket _clientSocket){
+        clientSocket = _clientSocket;
+    }
+    public void run(){
+        try {
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            String inputLine = in.readLine();
+                out.println(inputLine);
+                Result result = new Result(inputLine);
+                try {
+                    EchoServer.db.addResult(result);
                 }
-                out.close();
-                in.close();
-                clientSocket.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
+                catch (Exception e){
+                    System.out.println("Cannot add result");
+                }
+            out.close();
+            in.close();
+            clientSocket.close();
         }
-    private void addToDatabase(Result result)throws Exception{
-        EchoServer.db.addResult(result);
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
-class Result{
-    String player1;
-    String player2;
-    String result;
-    Result(String got){
-        String[] temp = got.split(";");
-        player1 = temp[0];
-        player2 = temp[1];
-        result = temp[2];
-    }
-}
+
 
 
 
